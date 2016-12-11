@@ -1,31 +1,50 @@
 <!doctype html>
 <html>
     <head>
+        <script
+          src="https://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
+        <!--
+        <script src="webcomponentsjs/webcomponents.js" type="text/javascript"></script>
+        -->
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Web Components</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
         <link href="css/base.css" rel="stylesheet">
         <style>
-          mytag {
-            display: block;
-            width: 100%;
-            min-height: 10px;
-            background: #DDD;
-            padding: 15px;
-          }
         </style>
+        <script>
+          
+        </script>
     </head>
     <body>
       
       <div class="container">
         
-        <mytag>
-          mytag content
-        </mytag>
+        <custom-elem id="test1" data-test1="one" data-test2="two" someattr1="attribute one" someattr2="attribute two"></custom-elem>
         
+        <br />
+        <br />
+        
+        <!--
+        <img src="assets/earthling.png" />
+        -->
+        
+        <transparent-img src="assets/earthling.png"></transparent-img>
+        
+        <br />
+        <br />
+        
+        <!--
+        <img is="transparent-img" src="assets/earthling.png"> 
+        -->
+
       </div>
-      
+            
+      <script src="js/custom-element1.js" type="text/javascript"></script>
     </body>
 </html>
