@@ -42,24 +42,30 @@ customElements.define('x-product', XProduct);
 
 class CustomElem extends HTMLElement {
   constructor() {
+    // Must be executed first in the constructor
     super();
+    
+    // Intialize class properties
     this._attrOne = null;
     this._attrTwo = null;
-    this._someProp1 = null;
-    this._someProp2 = null;
+    this._someAttr1 = null;
+    this._someAttr2 = null;
     
-    console.log(this);
+    // console.log(this);
     
-    this.innerHTML = "<style>custom-elem { display: block; width: 100%; padding: 10px; background: #888; color: #000 }</style>";
+    // Insert styles
+    this.innerHTML = "<style>custom-elem { display: block; width: 100%; padding: 20px; background: #f46524; color: #000; font-size: 26px; }</style>";
 
-    var initVal = this.dataset.test1;
+    // var initVal = this.dataset.test1;
+    var initVal = this.getAttribute("someattr1");
+    console.log(initVal);
     
     this.appendChild(
       (function() {
-        var innerDiv = document.createElement('div')
-        innerDiv.className = 'inset';
-        innerDiv.innerHTML = initVal;
-        return innerDiv;
+        var insetDiv = document.createElement('div')
+        insetDiv.className = 'inset';
+        insetDiv.innerHTML = initVal;
+        return insetDiv;
       })()
     );
     
@@ -76,11 +82,17 @@ class CustomElem extends HTMLElement {
     $(this).css({'transform' : 'rotate('+ degrees +'deg)'});
   }
 
-  static get observedAttributes() { return ["data-test1", "data-test2", "someprop1", "someprop2"]; }
+  // Set array of attributes to be accessible by getters and setters
+  static get observedAttributes() { return ["someattr1", "someattr1"]; }
 
+  connectedCallback() {
+    this._someAttr1 = this.getAttribute("someattr1");
+    this._someAttr2 = this.getAttribute("someattr2");
+    this._updateRendering();
+  }
+  
+  // Executes whenever an attribute is changed
   attributeChangedCallback(name, oldValue, newValue) {
-    console.log(name);
-    
     switch (name) {
       case "data-test1":
         this._attrOne = newValue;
@@ -88,39 +100,40 @@ class CustomElem extends HTMLElement {
       case "data-test2":
         this._attrTwo = newValue;
         break;
-      case "someprop1":
-        this._someProp1 = newValue;
+      case "someattr1":
+        this._someAttr1 = newValue;
         break;
-      case "someprop2":
-        this._someProp1 = newValue;
+      case "someattr1":
+        this._someAttr1 = newValue;
         break;
       default:
     }
 
     this._updateRendering();
   }
-  connectedCallback() {
-    this._updateRendering();
-  }
   
-  // GETTERS AND SETTERS FOR PROPERTIES
-  get someprop1() {
-    return this._someProp1;
+  // Getters and setters
+  get someattr1() {
+    console.log("Getting someattr1");
+    return this._someAttr1;
   }
-  set someprop1(v) {
-    this.setAttribute("someprop1", v);
+  set someattr1(v) {
+    console.log("Setting someattr1");
+    this.setAttribute("someattr1", v);
   }
-  get someprop2() {
-    return this._someProp2;
+  get someattr2() {
+    console.log("Getting someattr2");
+    return this._someAttr2;
   }
-  set someprop2(v) {
-    this.setAttribute("someprop2", v);
+  set someattr2(v) {
+    console.log("Getting someattr2");
+    this.setAttribute("someattr2", v);
   }
 
   _updateRendering() {
-    console.log("UPDATE RENDERING");
+    console.log("Updating rendering");
     var theInset = this.getElementsByClassName('inset')[0];
-    theInset.innerHTML = this._attrOne;
+    theInset.innerHTML = this._someAttr1;
   }
 }
 
@@ -128,40 +141,27 @@ customElements.define("custom-elem", CustomElem);
 
 
 
+
+
 //
-
-class TransparentImg extends HTMLImageElement {
+class TransparentImg1 extends HTMLElement {
   constructor() {
     super();
-    console.log("IMAGE");
-    console.log(this);
+    var img = document.createElement('img');
+    img.src = this.getAttribute('src');
+    this.appendChild(img);
     this.style.opacity = "0.5";
   }
 }
-customElements.define("transparent-img", TransparentImg,  { extends: "img" });
+customElements.define("transparent-img", TransparentImg1,  { extends: "img" });
+
 
 /*
-class TransparentImg extends Image {
+//
+customElements.define('transparent-img', class extends HTMLImageElement {
   constructor() {
     super();
-    
-    console.log("IMAGE");
-    console.log(this);
-    
-    this.style.opacity = "0.5";
-  }
-}
-customElements.define("transparent-img", TransparentImg, { extends: "img" });
-*/
-/*
-customElements.define('transparent-img', class extends Image {
-  constructor() {
-    super();
-    console.log(this);
     this.style.opacity = "0.5";
   }
 }, {extends: 'img'});
 */
-
-//
-
