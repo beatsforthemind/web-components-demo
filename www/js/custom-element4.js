@@ -49,13 +49,10 @@ class CustomElem extends HTMLElement {
     this._someProp2 = null;
     
     console.log(this);
-    console.log(this.dataset.test1);
     
     this.innerHTML = "<style>custom-elem { display: block; width: 100%; padding: 10px; background: #888; color: #000 }</style>";
-    
-    // var initVal = this.getAttribute('data-test1');
+
     var initVal = this.dataset.test1;
-    
     
     this.appendChild(
       (function() {
@@ -65,7 +62,18 @@ class CustomElem extends HTMLElement {
         return innerDiv;
       })()
     );
-
+    
+    this.addEventListener('click', e => {
+      if(this.disabled) {
+        return;
+      }
+      this.toggleElem(10);
+    });
+    
+  }
+  
+  toggleElem(degrees) {
+    $(this).css({'transform' : 'rotate('+ degrees +'deg)'});
   }
 
   static get observedAttributes() { return ["data-test1", "data-test2", "someprop1", "someprop2"]; }
@@ -95,25 +103,19 @@ class CustomElem extends HTMLElement {
     this._updateRendering();
   }
   
-  // GETTERS AND SETTERS
+  // GETTERS AND SETTERS FOR PROPERTIES
   get someprop1() {
-    console.log("RUNNING GET someprop1");
     return this._someProp1;
   }
   set someprop1(v) {
-    console.log("RUNNING SET someprop1");
     this.setAttribute("someprop1", v);
   }
-  
   get someprop2() {
-    console.log("RUNNING GET someprop2");
     return this._someProp2;
   }
   set someprop2(v) {
-    console.log("RUNNING SET someprop2");
     this.setAttribute("someprop2", v);
   }
-
 
   _updateRendering() {
     console.log("UPDATE RENDERING");
@@ -123,3 +125,43 @@ class CustomElem extends HTMLElement {
 }
 
 customElements.define("custom-elem", CustomElem);
+
+
+
+//
+
+class TransparentImg extends HTMLImageElement {
+  constructor() {
+    super();
+    console.log("IMAGE");
+    console.log(this);
+    this.style.opacity = "0.5";
+  }
+}
+customElements.define("transparent-img", TransparentImg,  { extends: "img" });
+
+/*
+class TransparentImg extends Image {
+  constructor() {
+    super();
+    
+    console.log("IMAGE");
+    console.log(this);
+    
+    this.style.opacity = "0.5";
+  }
+}
+customElements.define("transparent-img", TransparentImg, { extends: "img" });
+*/
+/*
+customElements.define('transparent-img', class extends Image {
+  constructor() {
+    super();
+    console.log(this);
+    this.style.opacity = "0.5";
+  }
+}, {extends: 'img'});
+*/
+
+//
+
