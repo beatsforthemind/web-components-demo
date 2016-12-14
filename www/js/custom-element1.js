@@ -2,19 +2,16 @@ class CustomElem extends HTMLElement {
   constructor() {
     // Must be executed first in the constructor
     super();
+    console.log("constructor Fired");
     
-    // Intialize class properties
+    // Intialize properties
     this._someProp1 = null;
     this._someProp2 = null;
-    
-    // console.log(this);
     
     // Insert styles
     this.innerHTML = "<style>custom-elem { display: block; width: 100%; padding: 20px; background: #f46524; color: #000; font-size: 26px; }</style>";
 
-    // var initVal = this.dataset.test1;
-    var initVal = this.getAttribute("someattr1");
-    console.log(initVal);
+    var initVal = this.getAttribute("someprop1");
     
     this.appendChild(
       (function() {
@@ -42,6 +39,7 @@ class CustomElem extends HTMLElement {
   static get observedAttributes() { return ["someprop1", "someprop2"]; }
 
   connectedCallback() {
+    console.log("connectedCallback Fired");
     this._someProp1 = this.getAttribute("someprop1");
     this._someProp2 = this.getAttribute("someprop2");
     this._updateRendering();
@@ -93,6 +91,16 @@ customElements.define("custom-elem", CustomElem);
 
 
 
+
+
+
+
+
+
+
+
+
+
 //
 class TransparentImg1 extends Image {
   constructor() {
@@ -101,14 +109,3 @@ class TransparentImg1 extends Image {
   }
 }
 customElements.define("transparent-img", TransparentImg1,  { extends: "img" });
-
-
-/*
-//
-customElements.define('transparent-img', class extends HTMLImageElement {
-  constructor() {
-    super();
-    this.style.opacity = "0.5";
-  }
-}, {extends: 'img'});
-*/
