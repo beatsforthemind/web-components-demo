@@ -1,0 +1,25 @@
+{
+  "name": "polymer-from-scratch",
+  "homepage": "https://github.com/beatsforthemind/web-components-demo",
+  "authors": [
+    "Eric Anderson <beatsforthemind@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "iron-icons": "PolymerElements/iron-icons#^1.2.0",
+    "polymer": "Polymer#^1.7.0",
+    "iron-iconset": "PolymerElements/iron-iconset#^1.0.5",
+    "paper-badge": "PolymerElements/paper-badge#^1.1.4",
+    "paper-button": "PolymerElements/paper-button#^1.0.14",
+    "google-map": "GoogleWebComponents/google-map#^1.1.14"
+  }
+}

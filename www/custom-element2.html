@@ -19,6 +19,7 @@
           #test1-container #test1 .inset {
             height: 500px;
           }
+          /* custom-elem:not(:defined) { display: block; width: 100%; height: 100px; background: red; } */
         </style>
         <script>
         </script>
@@ -28,8 +29,13 @@
       <div class="container">
         
         <div id="test1-container">
-          <custom-elem id="test1" data-test1="one" data-test2="two" someattr1="attribute one" someattr2="attribute two">
+          
+          <custom-elem id="test1" someprop1="property one content" someprop2="property two content">
+            <h2 slot="slot1">TEST 1</h2>
+            <h2 slot="slot2">TEST 2</h2>
+            <img src="assets/earthling.png" />
           </custom-elem>
+          
         </div>
         
         <br />

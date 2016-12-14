@@ -1,0 +1,20 @@
+{
+  "name": "polymer-test",
+  "homepage": "https://github.com/beatsforthemind/web-components-demo",
+  "authors": [
+    "Eric Anderson <beatsforthemind@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "app-layout": "PolymerElements/app-layout#^0.10.6"
+  }
+}

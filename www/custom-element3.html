@@ -19,6 +19,10 @@
           #test1-container #test1 .inset {
             height: 500px;
           }
+          img.image-class {
+            max-width: 160px !important;
+            margin: 20px !important;
+          }
         </style>
         <script>
         </script>
@@ -27,15 +31,50 @@
       
       <div class="container">
         
-        <div id="test1-container">
-          <custom-elem id="test1" data-test1="one" data-test2="two" someattr1="attribute one" someattr2="attribute two">
-          </custom-elem>
-        </div>
+        <template id="custom-template">
+          <style>
+            p {
+              color: #f46524;
+            }
+            .img-area-container img {
+              max-width: 160px !important;
+              margin: 20px !important;
+            }
+            /*
+            ::slotted(div) {
+              max-width: 160px !important;
+              margin: 20px !important;
+            }
+            */
+          </style>
+          <p>I'm in Shadow DOM. My markup was stamped from a template.</p>
+          <br />
+          <div class="img-area-container">
+            <slot name="img-area">
+            </slot>
+          </div>
+        </template>
+              
+        <custom-from-template>
+          <div slot="img-area">
+            <img class="image-class" src="assets/earthling.png" />
+          </div>
+        </custom-from-template>
         
-        <br />
+        <script type="text/javascript">
+          customElements.define('custom-from-template', class extends HTMLElement {
+            constructor() {
+              super();
+              var shadowRoot = this.attachShadow({mode: 'open'});
+              var tmpl = document.querySelector('#custom-template');
+              var tmplInstance = tmpl.content.cloneNode(true);
+              shadowRoot.appendChild(tmplInstance);
+            }
+          });
+        </script>
 
       </div>
             
-      <script src="js/custom-element2.js" type="text/javascript"></script>
+      <script src="js/custom-element3.js" type="text/javascript"></script>
     </body>
 </html>

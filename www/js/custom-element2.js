@@ -6,16 +6,15 @@ class CustomElem extends HTMLElement {
     var shadowRoot = this.attachShadow({mode: 'open'});
     
     // Intialize class properties
-    this._attrOne = null;
-    this._attrTwo = null;
-    this._someAttr1 = null;
-    this._someAttr2 = null;
-    
+    this._someProp1 = null;
+    this._someProp2 = null;
     
     var resetCss = "html{box-sizing:border-box}*,:after,:before{box-sizing:inherit}*{padding:0;margin:0;}";
-    shadowRoot.innerHTML = "<style>"+resetCss+":host-context(#test1-container) { padding: 0px; background: #DDD; } :host(#test1) { display: block; padding: 10px !important; background: #444; } .inset { display: block; width: 100%; padding: 20px; background: #f46524; color: #000; font-size: 26px; }";
+    shadowRoot.innerHTML = "<style>"+resetCss+" :host-context(#test1-container) { padding: 0px; background: #DDD; } :host(#test1) { display: block; padding: 10px !important; background: #444; } .inset { display: block; width: 100%; padding: 20px; background: #f46524; color: #000; font-size: 26px; } ::slotted(h2) { color: #FFF; } custom-elem:not(:defined) { display: block; width: 100%; height: 100px; background: red; }</style>";
+    // <slot name=\"slot1\"></slot>
+    // <slot select=\"img\"></slot>
 
-    var initVal = this.getAttribute("someattr1");
+    var initVal = this.getAttribute("someprop1");
     
     shadowRoot.appendChild(
       (function() {
@@ -40,28 +39,22 @@ class CustomElem extends HTMLElement {
   }
 
   // Set array of attributes to be accessible by getters and setters
-  static get observedAttributes() { return ["someattr1", "someattr1"]; }
+  static get observedAttributes() { return ["someprop1", "someprop2"]; }
 
   connectedCallback() {
-    this._someAttr1 = this.getAttribute("someattr1");
-    this._someAttr2 = this.getAttribute("someattr2");
+    this._someProp1 = this.getAttribute("someprop1");
+    this._someProp2 = this.getAttribute("someprop2");
     this._updateRendering();
   }
   
   // Executes whenever an attribute is changed
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
-      case "data-test1":
-        this._attrOne = newValue;
+      case "someprop1":
+        this._someProp1 = newValue;
         break;
-      case "data-test2":
-        this._attrTwo = newValue;
-        break;
-      case "someattr1":
-        this._someAttr1 = newValue;
-        break;
-      case "someattr1":
-        this._someAttr1 = newValue;
+      case "someprop2":
+        this._someProp2 = newValue;
         break;
       default:
     }
@@ -70,21 +63,21 @@ class CustomElem extends HTMLElement {
   }
   
   // Getters and setters
-  get someattr1() {
-    console.log("Getting someattr1");
-    return this._someAttr1;
+  get someprop1() {
+    console.log("Getting someprop1");
+    return this._someProp1;
   }
-  set someattr1(v) {
-    console.log("Setting someattr1");
-    this.setAttribute("someattr1", v);
+  set someprop1(v) {
+    console.log("Setting someprop1");
+    this.setAttribute("someprop1", v);
   }
-  get someattr2() {
-    console.log("Getting someattr2");
-    return this._someAttr2;
+  get someprop2() {
+    console.log("Getting someprop2");
+    return this._someProp2;
   }
-  set someattr2(v) {
-    console.log("Getting someattr2");
-    this.setAttribute("someattr2", v);
+  set someprop2(v) {
+    console.log("Getting someprop2");
+    this.setAttribute("someprop2", v);
   }
 
   _updateRendering() {
@@ -92,7 +85,7 @@ class CustomElem extends HTMLElement {
     console.log(this.shadowRoot.querySelector('.inset'));
     
     var theInset = this.shadowRoot.querySelector('.inset');
-    theInset.innerHTML = this._someAttr1;
+    theInset.innerHTML = this._someProp1;
   }
 }
 

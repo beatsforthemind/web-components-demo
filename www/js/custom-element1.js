@@ -1,55 +1,11 @@
-/*
-// Create a class for the element
-class XProduct extends HTMLElement {
-  constructor() {
-    // Always call super first in constructor
-    super();
-    
-    // Create a standard img element and set it's attributes.
-    var img = document.createElement('img');
-    img.alt = this.getAttribute('data-name');
-    img.src = this.getAttribute('data-img');
-    
-    img.width = '150';
-    img.height = '150';
-    img.className = 'product-img';
-    
-    // Create a shadow root
-    var shadow = this.attachShadow({mode: 'open'});
-    
-    // Add the image to the shadow root.
-    shadow.appendChild(img);
-
-    // Add an event listener to the image.
-    img.addEventListener('click', () => {
-      window.location = this.getAttribute('data-url');
-    });
-
-    // Create a link to the product.
-    var link = document.createElement('a');
-    link.innerText = this.getAttribute('data-name');
-    link.href = this.getAttribute('data-url');
-    link.className = 'product-name';
-
-    // Add the link to the shadow root.
-    shadow.appendChild(link);
-  }
-}
-
-// Define the new element
-customElements.define('x-product', XProduct);
-*/
-
 class CustomElem extends HTMLElement {
   constructor() {
     // Must be executed first in the constructor
     super();
     
     // Intialize class properties
-    this._attrOne = null;
-    this._attrTwo = null;
-    this._someAttr1 = null;
-    this._someAttr2 = null;
+    this._someProp1 = null;
+    this._someProp2 = null;
     
     // console.log(this);
     
@@ -73,38 +29,32 @@ class CustomElem extends HTMLElement {
       if(this.disabled) {
         return;
       }
-      this.toggleElem(10);
+      this.moveElem(10);
     });
     
   }
   
-  toggleElem(degrees) {
+  moveElem(degrees) {
     $(this).css({'transform' : 'rotate('+ degrees +'deg)'});
   }
 
-  // Set array of attributes to be accessible by getters and setters
-  static get observedAttributes() { return ["someattr1", "someattr1"]; }
+  // Set array of attributes to be accessible by getters and setters and affect attributeChangedCallback
+  static get observedAttributes() { return ["someprop1", "someprop2"]; }
 
   connectedCallback() {
-    this._someAttr1 = this.getAttribute("someattr1");
-    this._someAttr2 = this.getAttribute("someattr2");
+    this._someProp1 = this.getAttribute("someprop1");
+    this._someProp2 = this.getAttribute("someprop2");
     this._updateRendering();
   }
   
   // Executes whenever an attribute is changed
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
-      case "data-test1":
-        this._attrOne = newValue;
+      case "someprop1":
+        this._someProp1 = newValue;
         break;
-      case "data-test2":
-        this._attrTwo = newValue;
-        break;
-      case "someattr1":
-        this._someAttr1 = newValue;
-        break;
-      case "someattr1":
-        this._someAttr1 = newValue;
+      case "someprop2":
+        this._someProp2 = newValue;
         break;
       default:
     }
@@ -113,27 +63,27 @@ class CustomElem extends HTMLElement {
   }
   
   // Getters and setters
-  get someattr1() {
-    console.log("Getting someattr1");
-    return this._someAttr1;
+  get someprop1() {
+    console.log("Getting someprop1");
+    return this._someProp1;
   }
-  set someattr1(v) {
-    console.log("Setting someattr1");
-    this.setAttribute("someattr1", v);
+  set someprop1(v) {
+    console.log("Setting someprop1");
+    this.setAttribute("someprop1", v);
   }
   get someattr2() {
-    console.log("Getting someattr2");
-    return this._someAttr2;
+    console.log("Getting someprop2");
+    return this._someProp2;
   }
-  set someattr2(v) {
-    console.log("Getting someattr2");
-    this.setAttribute("someattr2", v);
+  set someprop2(v) {
+    console.log("Getting someprop2");
+    this.setAttribute("someprop2", v);
   }
 
   _updateRendering() {
     console.log("Updating rendering");
     var theInset = this.getElementsByClassName('inset')[0];
-    theInset.innerHTML = this._someAttr1;
+    theInset.innerHTML = this._someProp1;
   }
 }
 
@@ -144,12 +94,9 @@ customElements.define("custom-elem", CustomElem);
 
 
 //
-class TransparentImg1 extends HTMLElement {
+class TransparentImg1 extends Image {
   constructor() {
     super();
-    var img = document.createElement('img');
-    img.src = this.getAttribute('src');
-    this.appendChild(img);
     this.style.opacity = "0.5";
   }
 }

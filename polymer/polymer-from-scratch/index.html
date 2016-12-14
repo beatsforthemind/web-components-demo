@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+    <head>
+        <script>
+          // Setup Polymer options
+          // Optional, these are defaults
+          window.Polymer = {
+            dom: 'shadow',
+            lazyRegister: true
+          };
+          
+          // Load webcomponentsjs polyfill if browser does not support native Web Components
+          (function() {
+            'use strict';
+            var onload = function() {
+              // For native Imports, manually fire WebComponentsReady so user code
+              // can use the same code path for native and polyfill'd imports.
+              if (!window.HTMLImports) {
+                document.dispatchEvent(
+                  new CustomEvent('WebComponentsReady', {bubbles: true})
+                );
+              }
+            };
+            var webComponentsSupported = (
+              'registerElement' in document
+              && 'import' in document.createElement('link')
+              && 'content' in document.createElement('template')
+            );
+            if (!webComponentsSupported) {
+              var script = document.createElement('script');
+              script.async = true;
+              script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+              script.onload = onload;
+              document.head.appendChild(script);
+            } else {
+              onload();
+            }
+          })();
+        </script>
+        
+        <link rel="import" href="bower_components/polymer/polymer.html">
+        <link rel="import" href="bower_components/iron-icon/iron-icon.html">
+        <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+        <link rel="import" href="bower_components/iron-icons/maps-icons.html">
+        <link rel="import" href="bower_components/iron-iconset/iron-iconset.html">
+        <link rel="import" href="bower_components/iron-iconset-svg/iron-iconset-svg.html">
+        <link rel="import" href="bower_components/paper-button/paper-button.html">
+        <link rel="import" href="bower_components/paper-badge/paper-badge.html">
+        <link rel="import" href="bower_components/paper-styles/paper-styles.html">
+        <link rel="import" href="bower_components/google-map/google-map.html">
+        
+        <script>
+        </script>
+        
+        <link href="css/base.css" rel="stylesheet">
+        
+        <style>
+          paper-button#btn {
+            border: 1px solid #EEE;
+          }
+        </style>
+        
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Polymer</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    </head>
+    <body>
+
+      <div class="container">
+        
+        <script>
+          Polymer({
+            is: 'transparent-img',
+            extends: 'img',
+            created: function() {
+              this.style.opacity = '0.5';
+              this.style.maxWidth = "100px";
+            }
+          });
+        </script>
+        
+        <img is="transparent-img" src="assets/earthling.png">
+        
+        <br />
+        <br />
+        <br />
+        
+        <dom-module id="picture-frame">
+          <template>
+            <style>
+              :host-context(.container) {
+              }
+              :host * {
+                padding: 0;
+                margin: 0;
+              }
+              div {
+                display: inline-block;
+                background-color: #ccc;
+                border-radius: 8px;
+                padding: 10px;
+              }
+              ::content img {
+                max-width: 120px;
+              }
+            </style>
+            <div>
+              <!-- any children are rendered here -->
+              <content select="img"></content>
+            </div>
+          </template>
+          <script>
+            Polymer({
+              is: "picture-frame",
+            });
+          </script>
+        </dom-module>
+        
+        <picture-frame>
+          <img src="assets/earthling.png">
+        </picture-frame>
+        
+        <br />
+        <br />
+        <br />
+        
+        <dom-module id="name-tag">
+          <template>
+            <!-- bind to the "owner" property -->
+            This is <b>{{owner}}</b>'s name-tag element.
+          </template>
+          <script>
+          Polymer({
+            is: "name-tag",
+            properties: {
+              // declare the owner property
+              owner: {
+                type: String,
+                value: "Default",
+                reflectToAttribute: true,
+                readOnly: false,
+                notify: true
+              }
+            },
+            ready: function() {
+              // set this element's owner property
+              // this.owner = "Test";
+            }
+          });
+          </script>
+        </dom-module>
+        <!--  -->
+        <name-tag id="name-tag-id" owner="Eric"></name-tag>
+        
+        <br />
+        <br />
+        <br />
+        
+        <iron-icon icon="maps:directions-bus"></iron-icon>
+        <iron-icon icon="icons:accessibility"></iron-icon>
+        <iron-icon icon="icons:book"></iron-icon>
+        
+        <br />
+        <br />
+        <br />
+        
+        <div>
+          <paper-button id="btn">PAPER BUTTON</paper-button>
+          <paper-badge for="btn" label="4"></paper-badge>
+        </div>
+        
+        <br />
+        <br />
+        <br />
+        
+        <style>
+          google-map#test-map {
+            height: 500px;
+          }
+        </style>
+        <google-map id="test-map" zoom="15" latitude="43.0674363" longitude="-89.3927988" api-key="AIzaSyB2Vx4DqcroTzgDWsdP0XRIJhtHuvOPEd4">
+          <google-map-marker latitude="43.0674363" longitude="-89.3927988"></google-map-marker>
+        </google-map>
+
+      </div>
+      
+      <!-- Google API Key -->
+      <!-- AIzaSyB2Vx4DqcroTzgDWsdP0XRIJhtHuvOPEd4 -->
+    </body>
+</html>
